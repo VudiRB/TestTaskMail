@@ -1,24 +1,25 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TestTaskJun.Models;
+using TestTaskJun.Requests;
 
 namespace TestTaskJun.Controllers
 {
     [ApiController]
-    [Route("api/mails")]
+    [Route(Routes.Mails)]
     public class MailApiController : ControllerBase
     {
         [HttpGet]
         public IEnumerable<MailLog> Get()
         {
-            List<MailLog> ddd = MailLog.GetMails();
-            return ddd;
+            IEnumerable<MailLog> mails = MailLog.GetMails();
+            return mails;
         }
         
         [HttpPost]
-        public void Post(DataFromRequest dataFromRequest)
+        public void Post(SendMailRequest sendMailRequest)
         {
-            RequestBodyHandler.EvaqluteReques(dataFromRequest);
+            sendMailRequest.Handle();
         }
     }
 }

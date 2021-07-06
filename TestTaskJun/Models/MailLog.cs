@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using Dapper;
 using Npgsql;
 
@@ -17,18 +16,18 @@ namespace TestTaskJun.Models
         public string FailedMessage { get; set; }
         
         
-        public static List<MailLog> GetMails()
+        public static IEnumerable<MailLog> GetMails()
         {
-            List<MailLog> mailLogObjects;
+            IEnumerable<MailLog> mailLogObjects;
             using (IDbConnection db =
                 new NpgsqlConnection("Host=localhost;Database=mailLog;User Id=postgres;Password=admin;"))
             {
-                mailLogObjects = db.Query<MailLog>("SELECT * FROM maillog").ToList();
+                mailLogObjects = db.Query<MailLog>("SELECT * FROM maillog");
             }
             return mailLogObjects;
         }
         
-        public static void InsertMail(MailLog mailLog) //вынести в константу таблицу, и переименовать мейллогобжекс
+        public static void InsertMail(MailLog mailLog)
         {
             string sql = @"INSERT INTO maillog (Subject,Body,Recipient,Date,Result,FailedMessage) 
                                        Values (@Subject,@Body,@Recipient,@Date,@Result,@FailedMessage);";

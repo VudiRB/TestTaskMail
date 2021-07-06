@@ -1,6 +1,6 @@
-namespace TestTaskJun.Models
+namespace TestTaskJun.Mail
 {
-    public class Mail //переименовать для расширения
+    public class Mail
     {
         public string Subject { get; set; }
         public string Body { get; set; }

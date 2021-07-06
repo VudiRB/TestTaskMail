@@ -3,9 +3,9 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace TestTaskJun.Models
+namespace TestTaskJun.Mail
 {
-    public class MailSender //вынести из функции и сделать не статиком и вынести в реквестхендлер
+    public class MailSender
     {
         private const string Email = "artem15mulo@gmail.com";
         private const string Password = "";
