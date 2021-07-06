@@ -6,12 +6,12 @@ namespace TestTaskJun.Controllers
 {
     [ApiController]
     [Route("api/mails")]
-    public class MainApiController : ControllerBase
+    public class MailApiController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<MailLogObject> Get()
+        public IEnumerable<MailLog> Get()
         {
-            List<MailLogObject> ddd = DBHandler.GetMails();
+            List<MailLog> ddd = MailLog.GetMails();
             return ddd;
         }
         

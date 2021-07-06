@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -6,29 +7,36 @@ using Npgsql;
 
 namespace TestTaskJun.Models
 {
-    public static class DBHandler
+    public class MailLog
     {
-        public static List<MailLogObject> GetMails()
+        public string Subject { get; set; }
+        public string Body { get; set; }
+        public string Recipient { get; set; }
+        public DateTime Date { get; set; }
+        public string Result { get; set; }
+        public string FailedMessage { get; set; }
+        
+        
+        public static List<MailLog> GetMails()
         {
-            List<MailLogObject> mailLogObjects;
+            List<MailLog> mailLogObjects;
             using (IDbConnection db =
                 new NpgsqlConnection("Host=localhost;Database=mailLog;User Id=postgres;Password=admin;"))
             {
-                mailLogObjects = db.Query<MailLogObject>("SELECT * FROM maillog").ToList();
+                mailLogObjects = db.Query<MailLog>("SELECT * FROM maillog").ToList();
             }
             return mailLogObjects;
         }
         
-        public static void InsertMail(MailLogObject mailLogObject)
+        public static void InsertMail(MailLog mailLog) //вынести в константу таблицу, и переименовать мейллогобжекс
         {
             string sql = @"INSERT INTO maillog (Subject,Body,Recipient,Date,Result,FailedMessage) 
                                        Values (@Subject,@Body,@Recipient,@Date,@Result,@FailedMessage);";
             using (IDbConnection dbConnection =
                 new NpgsqlConnection("Host=localhost;Database=mailLog;User Id=postgres;Password=admin;"))
             {
-                dbConnection.Execute(sql, mailLogObject);
+                dbConnection.Execute(sql, mailLog);
             }
         }
     }
-    
 }

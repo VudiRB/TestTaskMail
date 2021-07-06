@@ -1,31 +1,33 @@
 using System;
+using TestTaskJun.Models;
 
-namespace TestTaskJun.Models
+namespace TestTaskJun
 {
     public static class RequestBodyHandler
     {
+        private static MailSender _mailSender = new MailSender();
         public static async void EvaqluteReques(DataFromRequest dataFromRequest)
         {
             foreach (string recipient in dataFromRequest.Recipients)
             {
-                DataForSendToSMTP dataForSendToSmtp = new DataForSendToSMTP
+                Mail mail = new Mail
                 {
                     Body = dataFromRequest.Body, 
                     Subject = dataFromRequest.Subject, 
                     Recipient = recipient
                 };
-                string failedMessage = await SMPTSender.SendEmailAsync(dataForSendToSmtp);
+                string failedMessage = await _mailSender.SendEmailAsync(mail);
                 
-                MailLogObject mailLogObject = new MailLogObject
+                MailLog mailLog = new MailLog
                 {
-                    Body = dataForSendToSmtp.Body,
-                    Subject = dataForSendToSmtp.Subject,
-                    Recipient = dataForSendToSmtp.Recipient,
+                    Body = mail.Body,
+                    Subject = mail.Subject,
+                    Recipient = mail.Recipient,
                     Date = DateTime.Now,
                     FailedMessage = failedMessage,
                     Result = failedMessage != "" ? ResultState.Failed : ResultState.OK
                 };
-                DBHandler.InsertMail(mailLogObject);
+                MailLog.InsertMail(mailLog);
             }
         }
     }

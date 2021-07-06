@@ -1,6 +1,6 @@
 namespace TestTaskJun.Models
 {
-    public class DataForSendToSMTP
+    public class Mail //переименовать для расширения
     {
         public string Subject { get; set; }
         public string Body { get; set; }

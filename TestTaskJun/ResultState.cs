@@ -1,4 +1,4 @@
-namespace TestTaskJun.Models
+namespace TestTaskJun
 {
     public static class ResultState
     {
