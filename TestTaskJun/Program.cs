@@ -3,8 +3,14 @@ using Microsoft.Extensions.Hosting;
 
 namespace TestTaskJun
 {
+    /// <summary>
+    /// The base class for initializing the program. Contains the Main method.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// The method that initializes the program.
+        /// </summary>
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
